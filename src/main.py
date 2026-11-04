@@ -1,5 +1,6 @@
 from typing import TypedDict, Literal
 from langgraph.graph import StateGraph, START, END
+from research_agent import run_research
 
 class AgentState(TypedDict):
     query: str
@@ -16,12 +17,12 @@ def supervisor(state: AgentState):
     return {"next_agent": "finish"}
 
 def research_agent(state: AgentState):
-    print("Research agent executing.....")
+    print("Research agent executing...")
+
+    result = run_research(state["query"])
+
     return {
-        "research": {
-            "Illustrative findings: AI agents are "
-            "being explored for business automation "
-        }
+        "research": result["summary"]
     }
 
 def analyst_agent(state: AgentState):
